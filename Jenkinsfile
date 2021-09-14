@@ -87,12 +87,10 @@ pipeline {
      archiveArtifacts 'target/*.jar'
     
     }
-   }   
-  
-
-    
+   }      
  } 
 }   }  }
+}
 }
 
 
