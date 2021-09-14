@@ -75,7 +75,7 @@ pipeline {
    post {
    
     always {
-     junit 'target/failsafe-reports/**/*.xml'
+     junit 'target/surefire-reports/TEST-com.ecommerce.microcommerce.MicrocommerceApplicationTest.xml'
     success {
      stash(name: 'artifact', includes: 'target/*.jar')
      stash(name: 'pom', includes: 'pom.xml')
