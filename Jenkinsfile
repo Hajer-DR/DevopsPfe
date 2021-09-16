@@ -78,7 +78,6 @@ stage('Integration Tests') {
    post {
    
     always {
-     sh 'mvn clean'
      junit 'target/surefire-reports/*.xml'
     success {
      stash(name: 'artifact', includes: 'target/*.jar')
