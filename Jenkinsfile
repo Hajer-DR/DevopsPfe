@@ -18,6 +18,7 @@ pipeline {
   
     
   stage('Build') {
+
   
    parallel {
    
@@ -59,9 +60,9 @@ pipeline {
  //   }
  //  }
   }
- 
+    }  }
 
-     stage('Integration Tests') {
+stage('Integration Tests') {
 
    
    agent {
@@ -89,8 +90,8 @@ pipeline {
     }
    }      
  } 
-}   }  }
-}
 }
 
+}
+}
 
