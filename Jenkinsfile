@@ -2,24 +2,24 @@
 pipeline {
  agent any
  environment {
-  registry = "narjess6/devops"
+ // registry = "narjess6/devops"
   // This can be nexus3 or nexus2
-  NEXUS_VERSION = "nexus3"
+  //NEXUS_VERSION = "nexus3"
   // This can be http or https
-  NEXUS_PROTOCOL = "http"
+  //NEXUS_PROTOCOL = "http"
   // Where your Nexus is running. In my case:
-  NEXUS_URL = "192.168.0.170:1081"
+  //NEXUS_URL = "192.168.0.170:1081"
   // Repository where we will upload the artifact
-  NEXUS_REPOSITORY = "maven-nexus-repo"
+ // NEXUS_REPOSITORY = "maven-nexus-repo"
   // Jenkins credential id to authenticate to Nexus OSS
-  NEXUS_CREDENTIAL_ID = "nexus-user-credentials"
+ // NEXUS_CREDENTIAL_ID = "nexus-user-credentials"
   /* 
     Windows: set the ip address of docker host. In my case 192.168.99.100.
     to obtains this address : $ docker-machine ip
     Linux: set localhost to SONARQUBE_URL
   */
-  SONARQUBE_URL = "http://192.168.0.170"
-  SONARQUBE_PORT = "9000"
+ // SONARQUBE_URL = "http://192.168.0.170"
+ // SONARQUBE_PORT = "9000"
  }
  options {
   skipDefaultCheckout()
@@ -32,7 +32,7 @@ pipeline {
   }
   
     
-  stage('Build') {
+  /*stage('Build') {
    parallel {
     stage('Compile') {
      agent {
@@ -47,10 +47,10 @@ pipeline {
       sh ' mvn clean compile'
 	  sh 'mvn package -DskipTests=true'
      }
-    }
+    }*/
 	
 	
-  stage('Unit Tests') {
+  /*stage('Unit Tests') {
 
 
    agent {
@@ -62,14 +62,14 @@ pipeline {
    }
    steps {
     sh 'mvn test'
-   }
+   }*/
  //  post {
  //   always {
  //    junit 'target/surefire-reports/**/*.xml'
  //   }
  //  }
   }
-  stage('Integration Tests') {
+  /*stage('Integration Tests') {
 
    
    agent {
@@ -95,9 +95,9 @@ pipeline {
    }
   }
  }
-} 
+} */
   
-  stage('Code Quality Analysis') {
+ /* stage('Code Quality Analysis') {
 
    
    parallel {
@@ -116,8 +116,8 @@ pipeline {
       sh ' mvn javadoc:javadoc'
       step([$class: 'JavadocArchiver', javadocDir: './target/site/apidocs', keepAll: 'true'])
      }
-    }
-    stage('SonarQube') {
+    }*/
+   /* stage('SonarQube') {
 
 	
      agent {
@@ -129,7 +129,7 @@ pipeline {
      }
      steps {
       sh " mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_URL:$SONARQUBE_PORT"
-     }
+     }*/
     
 	
 	
@@ -144,7 +144,7 @@ pipeline {
   
   }}
   
-   stage('Deploy Artifact To Nexus') {
+  /* stage('Deploy Artifact To Nexus') {
 
    steps {
     script {
@@ -208,13 +208,13 @@ pipeline {
      }
     }
    }
-  }
+  }*/
   
  
   
 
 	
-stage('Publish docker image to dockerhub with our app updated') {
+/*stage('Publish docker image to dockerhub with our app updated') {
             environment {
                 registryCredential = 'dockerhub'
             }
@@ -232,16 +232,23 @@ stage('Publish docker image to dockerhub with our app updated') {
                 }
             }
         }
-		
+		*/
 
-    stage('Deploy App') {
+    stage('Checkout Source') {
       steps {
-        script {
-          kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "kubecreds9999")
-        }
+        git url:'https://github.com/Narjesse/devOpsaws.git', branch:'main'
       }
     }
-
+    
+ 
+         stage('Update Kube Config an deploy to kubernetes'){
+            steps {
+                withAWS(region:'us-east-2',credentials:'aws-creds') {
+                    sh 'aws eks --region us-east-2 update-kubeconfig --name my-eks'   
+                    sh 'kubectl apply -f deployment.yml'
+                }
+            }
+        }
 
 
  
