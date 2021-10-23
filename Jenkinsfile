@@ -18,7 +18,14 @@ stage('Checkout Source') {
       }
     }
    
-       
+   stage('Update Kube Config an deploy to kubernetes'){
+            steps {
+                withAWS(region:'us-east-2',credentials:'aws-creds') {
+                    sh 'aws eks --region us-east-2 update-kubeconfig --name my-eks'   
+                    sh 'kubectl apply -f deployment.yml'
+                }
+            }
+        }      
 
  
  }
