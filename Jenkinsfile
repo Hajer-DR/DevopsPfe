@@ -12,6 +12,13 @@ pipeline {
    }
   }
     
+stage('Checkout Source') {
+      steps {
+        git url:'https://github.com/katsudoka2/DevopsPfe.git', branch:'main'
+      }
+    }
+   
+       
 
  
  }
