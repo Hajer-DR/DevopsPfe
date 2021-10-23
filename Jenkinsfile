@@ -236,10 +236,10 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git url:'https://github.com/Narjesse/devOpsaws.git', branch:'main'
+        git url:'https://github.com/katsudoka2/DevopsPfe.git', branch:'main'
       }
     }
-    
+    https://github.com/katsudoka2/DevopsPfe/blob/main/deployment.yml
  
          stage('Update Kube Config an deploy to kubernetes'){
             steps {
