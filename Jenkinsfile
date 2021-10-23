@@ -134,7 +134,7 @@ pipeline {
 	
 	
    
-   post {
+  /* post {
     always {
      // using warning next gen plugin
      recordIssues aggregatingResults: true, tools: [javaDoc(), checkStyle(pattern: '**/target/checkstyle-result.xml')]
@@ -142,7 +142,7 @@ pipeline {
    }
   }
   
-  }}
+  }}*/
   
   /* stage('Deploy Artifact To Nexus') {
 
