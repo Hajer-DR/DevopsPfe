@@ -85,7 +85,7 @@ pipeline {
    post {
     always {
      junit 'target/failsafe-reports/**/*.xml'
-    }
+ /*   }
     success {
      stash(name: 'artifact', includes: 'target/*.jar')
      stash(name: 'pom', includes: 'pom.xml')
@@ -94,7 +94,7 @@ pipeline {
     }
    }
   }
- }
+ }*/
 } */
   
  /* stage('Code Quality Analysis') {
